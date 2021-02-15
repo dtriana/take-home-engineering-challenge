@@ -11,7 +11,7 @@ namespace CseHomeWork.Maps
     public static class MapToken
     {
         [FunctionName("MapToken")]
-        public static async Task<IActionResult> Run(
+        public static async Task<string> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
@@ -22,17 +22,19 @@ namespace CseHomeWork.Maps
                 try
                 {
                     var theToken = await tokenProvider.GetAccessTokenAsync("https://atlas.microsoft.com/");
-                    return new OkObjectResult(theToken);
+                    return theToken;
                 }
-                catch
+                catch(Exception ex)
                 {
-                    return new BadRequestResult();
+                    log.LogCritical(ex, $"Map request from {req.Host} fail {ex.Message}");
+                    throw ex;
                 }
             }
             else
             {
-                return new UnauthorizedResult();
+                throw new System.Exception("Unauthorized");
             }
         }
-        }
     }
+}
+
