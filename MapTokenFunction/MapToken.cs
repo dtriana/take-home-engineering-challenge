@@ -15,7 +15,7 @@ namespace CseHomeWork.Maps
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation($"MapToken called from {req.HttpContext.Request.Host}");
+            log.LogInformation($"MapToken called from {req.Headers["Host"]}");
             var tokenProvider = new AzureServiceTokenProvider();
             if (req.Host.Value == "maptoken.azurewebsites.net")
             {
