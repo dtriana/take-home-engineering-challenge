@@ -28,7 +28,7 @@ function initialize() {
             clientId: "642260f2-b07e-43ff-849a-2a9b6362d5ac", //Your Azure Active Directory client id for accessing your Azure Maps account.
             getToken: function (resolve, reject, map) {
                 //URL to your authentication service that retrieves an Azure Active Directory Token.
-                var tokenServiceUrl = "/Common/Token";
+                var tokenServiceUrl = "https://maptoken.azurewebsites.net/api/MapToken";
                 fetch(tokenServiceUrl).then(r => r.text()).then(token => resolve(token));
             }
         }
