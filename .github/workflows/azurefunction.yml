@@ -2,11 +2,8 @@ name: Deploy DotNet project to function app with a Linux environment
 
 on:
   push:
-    branches:    
-      # Push events on main branch
-      - main
-      # Push events to branches matching refs/heads/MapTokenFunction
-      - 'MapTokenFunction/'
+    paths:    
+      - 'MapTokenFunction/**'
 env:
   AZURE_FUNCTIONAPP_NAME: MapToken  # set this to your application's name
   AZURE_FUNCTIONAPP_PACKAGE_PATH: './MapTokenFunction/'    # set this to the path to your web app project, defaults to the repository root
