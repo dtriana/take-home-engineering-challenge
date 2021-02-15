@@ -32,7 +32,7 @@ namespace CseHomeWork.Maps
             }
             else
             {
-                throw new System.Exception("Unauthorized");
+                throw new System.Exception($"Unauthorized -  {req.Host}");
             }
         }
     }
