@@ -15,7 +15,7 @@ namespace CseHomeWork.Maps
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            var referer = req.GetTypedHeaders().Referer;
+            var referer = req.GetTypedHeaders().Referer.ToString();
             log.LogInformation($"MapToken called from {referer}");
             if (referer == "https://davidtriana.com/")
             {
