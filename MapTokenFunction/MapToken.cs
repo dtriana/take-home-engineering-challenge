@@ -17,7 +17,7 @@ namespace CseHomeWork.Maps
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
             var tokenProvider = new AzureServiceTokenProvider();
-            if (req.Host.Value.StartsWith("localhost:7071") || req.Host.Value.StartsWith("https://sdeworkship.azurewebsites.net"))
+            if (req.Host.Value.StartsWith("davidtriana.com"))
             {
                 try
                 {
@@ -31,7 +31,7 @@ namespace CseHomeWork.Maps
             }
             else
             {
-                return new ForbidResult();
+                return new UnauthorizedResult();
             }
         }
         }
