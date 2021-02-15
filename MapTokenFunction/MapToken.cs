@@ -12,7 +12,7 @@ namespace CseHomeWork.Maps
     {
         [FunctionName("MapToken")]
         public static async Task<string> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
