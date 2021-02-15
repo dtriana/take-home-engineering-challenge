@@ -17,11 +17,11 @@ namespace CseHomeWork.Maps
         {
             var referer = req.GetTypedHeaders().Referer;
             log.LogInformation($"MapToken called from {referer}");
-            var tokenProvider = new AzureServiceTokenProvider();
-            if (req.Host.Value == "maptoken.azurewebsites.net")
+            if (referer == "https://davidtriana.com/")
             {
                 try
                 {
+                    var tokenProvider = new AzureServiceTokenProvider();
                     var theToken = await tokenProvider.GetAccessTokenAsync("https://atlas.microsoft.com/");
                     return theToken;
                 }
