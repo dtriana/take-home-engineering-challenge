@@ -35,3 +35,11 @@ Feel free to tackle this problem in a way that demonstrates your expertise of an
 San Francisco's food truck open dataset is [located here](https://data.sfgov.org/Economy-and-Community/Mobile-Food-Facility-Permit/rqzj-sfat/data) and there is an endpoint with a [CSV dump of the latest data here](https://data.sfgov.org/api/views/rqzj-sfat/rows.csv). We've included a [copy of this data](./Mobile_Food_Facility_Permit.csv) in this repo as well.
 
 Good luck! Please send a link to your solution on Github back to us at least 12 hours before your interview so we can review it before we speak.
+
+## My Solution
+
+To search for the nearest point, I used a brute force approach, by calculating the distance to all food trucks, then sorting. Why brute force instead of a more sophisticated divide and conquer algorithm?, given the problem space, food trucks in a city, a very efficient algorithm doesn't seem to be needed given the relatively small number of foods trucks that a city can hold.
+
+I did not invested time into updating the data from the web service, I'm using the data from the original repository. With more time I can implement this feature, by setting up a triggered Azure Function that will update the data file daily.
+
+The solution uses Azure Maps, which provides rich functionality for the user, allowing him/her to input his location directly in the map, and then showing the nearest food trucks. The solution is hosted in Github Pages, with one exception, an Azure Function to get the authorization token for the Azure Maps API. The logic to calculate the distances and get the top 5 runs entirely client side.

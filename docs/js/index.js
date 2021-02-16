@@ -3,22 +3,18 @@
 var maxClusterZoomLevel = 11;
 
 //The URL to the store location data.
-var storeLocationDataUrl = 'data/data.csv';
-
-//The URL to the icon image. 
-var iconImageUrl = 'images/CoffeeIcon.png';
+var storeLocationDataUrl = '/data/data.csv';
 
 var map, closestMarker, foodTrucks = [];
 var listItemTemplate = '<div class="listItem" onclick="itemSelected(\'{id}\')"><div class="listItem-title">{title}</div>{city}<br />Open until {closes}<br />{distance} miles away</div>';
 
 function initialize() {
     //The bounding box to limit the map view to. Format [West, South, East, North]
-    var boundingBox = [-122.54, 37.65, -122.3, 37.82];
+    var sanFranciscoBounds = [-122.54, 37.65, -122.3, 37.82];
 
     map = new atlas.Map('myMap', {
-        //center: [-122.4194, 37.7749],
-        maxBounds: boundingBox,
-        center: atlas.data.BoundingBox.getCenter(boundingBox),
+        maxBounds: sanFranciscoBounds,
+        center: atlas.data.BoundingBox.getCenter(sanFranciscoBounds),
         view: 'Auto',
 
         //Add authentication details for connecting to Azure Maps.
@@ -68,15 +64,24 @@ function getClosestMarker(e) {
     
     if (closestMarker) {
         var markers = [], divtext= '';
-        closestMarker.forEach(c => {
+        closestMarker.forEach((c, i) => {
             var m = new atlas.HtmlMarker({
                 position: [c.longitude, c.latitude],
-                color: 'red'
+                color: 'red',
+                text: i + 1
             });
             m.properties = { id: c.id };
             markers.push(m);
-            divtext += ` - Marker Id: ${c.id}<br/> - Distance: ${(c.distance).toFixed(2)} miles</br>`;
+            divtext += `<h2>${i + 1}</h2><b>${c.applicant}</b><br/><b>Distance:</b> ${(c.distance).toFixed(2)} miles</br><b>Open:</b> ${c.hours}</br><b>Food:</b> ${c.food}</br>`;
         });
+
+        var you = new atlas.HtmlMarker({
+            position: e.position,
+            color: 'blue',
+            text: 'you'
+        });
+
+        markers.push(you);
         map.markers.add(markers);
         //Display details about closest point.
         document.getElementById('listPanel').innerHTML = divtext;
@@ -118,7 +123,10 @@ function loadStoreData() {
                     var truck = {
                         longitude: row[header['Longitude']],
                         latitude : row[header['Latitude']],
-                        id: row[header['locationid']]
+                        id: row[header['locationid']],
+                        applicant : row[header['Applicant']],
+                        hours : row[header['dayshours']],
+                        food: row[header['FoodItems']]
                     }
 
                     foodTrucks.push(truck);
